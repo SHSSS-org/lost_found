@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lost and Found - SHSSS Headlines</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            font-size: 24px;
+            color: #ff385c;
+            margin-left: 10px;
+        }
+        
+        .logo-icon {
+            color: #ff385c;
+            font-size: 28px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: #ff385c;
+        }
+        
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            padding: 40px 0;
+            background: linear-gradient(135deg, #ff385c 0%, #e61e4d 100%);
+            color: white;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+        
+        .page-header h2 {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+        
+        .page-header p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Search and Filter Section */
+        .search-filter {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .search-bar {
+            display: flex;
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 50px 0 0 50px;
+            font-size: 16px;
+            outline: none;
+        }
+        
+        .search-bar button {
+            padding: 15px 25px;
+            background: #ff385c;
+            color: white;
+            border: none;
+            border-radius: 0 50px 50px 0;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        
+        .search-bar button:hover {
+            background: #e61e4d;
+        }
+        
+        .status-filter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .status-filter select {
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 50px;
+            font-size: 16px;
+            outline: none;
+            background: white;
+            min-width: 200px;
+        }
+        
+        /* Lost Items Grid */
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+        
+        .item-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            position: relative;
+        }
+        
+        .item-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .item-image {
+            height: 200px;
+            background-color: #f0f3f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ff385c;
+            font-size: 64px;
+            position: relative;
+        }
+        
+        .item-status {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .status-claimed {
+            background: #4caf50;
+            color: white;
+        }
+        
+        .status-unclaimed {
+            background: #ff9800;
+            color: white;
+        }
+        
+        .item-details {
+            padding: 20px;
+        }
+        
+        .item-details h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .item-description {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .item-info {
+            margin-bottom: 15px;
+        }
+        
+        .item-info p {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .item-info i {
+            margin-right: 10px;
+            color: #ff385c;
+            width: 20px;
+        }
+        
+        .contact-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: #ff385c;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .contact-btn:hover {
+            background: #e61e4d;
+        }
+        
+        .contact-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        /* Report Lost Item Button */
+        .report-item {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .report-btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: #ff385c;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: background 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .report-btn:hover {
+            background: #e61e4d;
+        }
+        
+        /* No Results Message */
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            grid-column: 1 / -1;
+            display: none;
+        }
+        
+        .no-results i {
+            font-size: 64px;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+        
+        .no-results p {
+            font-size: 18px;
+            color: #777;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 40px 0;
+            margin-top: 40px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-section h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #ff385c;
+        }
+        
+        .footer-section p, .footer-section a {
+            color: #ccc;
+            margin-bottom: 10px;
+            display: block;
+            text-decoration: none;
+        }
+        
+        .footer-section a:hover {
+            color: #ff385c;
+        }
+        
+        .social-icons a {
+            display: inline-block;
+            margin-right: 15px;
+            font-size: 20px;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #555;
+            color: #ccc;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 15px;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            nav ul li {
+                margin: 5px 10px;
+            }
+            
+            .search-filter {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-bar {
+                min-width: 100%;
+            }
+            
+            .status-filter {
+                width: 100%;
+            }
+            
+            .status-filter select {
+                width: 100%;
+            }
+            
+            .items-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-search logo-icon"></i>
+                    <h1>SHSSS Headlines</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="books_pdf.html"><i class="fas fa-book"></i> Books PDF</a></li>
+                        <li><a href="professionals.html"><i class="fas fa-user-tie"></i> Professionals</a></li>
+                        <li><a href="#" class="active"><i class="fas fa-search"></i> Lost & Found</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Page Header -->
+        <section class="page-header">
+            <h2>Lost and Found</h2>
+            <p>Find lost items or report something you've found on campus</p>
+        </section>
+
+        <!-- Search and Filter Section -->
+        <div class="search-filter">
+            <div class="search-bar">
+                <input type="text" id="search-input" placeholder="Search for items, descriptions, or locations...">
+                <button id="search-button"><i class="fas fa-search"></i> Search</button>
+            </div>
+            
+            <div class="status-filter">
+                <label for="status-select">Filter by Status:</label>
+                <select id="status-select">
+                    <option value="all">All Items</option>
+                    <option value="claimed">Claimed</option>
+                    <option value="unclaimed">Unclaimed</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Lost Items Grid -->
+        <div class="items-grid" id="items-container">
+            <!-- Items will be dynamically inserted here -->
+        </div>
+        
+        <!-- No Results Message -->
+        <div class="no-results" id="no-results">
+            <i class="fas fa-search"></i>
+            <p>No lost items found matching your search criteria</p>
+        </div>
+        
+        <!-- Report Lost Item Button -->
+        <div class="report-item">
+            <button class="report-btn" id="report-btn"><i class="fas fa-plus"></i> Report Lost Item</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>SHSSS Headlines</h3>
+                    <p>Helping you find what you've lost</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <a href="#">Home</a>
+                    <a href="books_pdf.html">Books PDF</a>
+                    <a href="professionals.html">Professionals</a>
+                    <a href="#">Lost & Found</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-envelope"></i> lostfound@shsss-headlines.edu</p>
+                    <p><i class="fas fa-phone"></i> (123) 456-7890</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 SHSSS Headlines. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Sample data (would be loaded from data.json in a real implementation)
+        const lostItems = [
+            {
+                id: 1,
+                name: "Black Wireless Earbuds",
+                description: "Samsung Galaxy Buds in a black case. Left earbud has a small scratch.",
+                where: "Library - Study Area C",
+                when: "2023-10-15 14:30",
+                contact: "library_desk@shsss.edu",
+                claimStatus: "unclaimed",
+                roomNumber: "LIB-102",
+                phone: "(555) 123-4567",
+                image: "earbuds"
+            },
+            {
+                id: 2,
+                name: "Calculus Textbook",
+                description: "Calculus: Early Transcendentals 8th Edition. Name written on inside cover: 'Alex Johnson'.",
+                where: "Mathematics Building - Room 204",
+                when: "2023-10-14 10:15",
+                contact: "math_dept@shsss.edu",
+                claimStatus: "claimed",
+                roomNumber: "MATH-204",
+                phone: "(555) 987-6543",
+                image: "textbook"
+            },
+            {
+                id: 3,
+                name: "Blue Water Bottle",
+                description: "Hydro Flask 32oz, blue color with several stickers on it. Includes a black lid.",
+                where: "Gym - Basketball Court",
+                when: "2023-10-16 17:45",
+                contact: "gym_office@shsss.edu",
+                claimStatus: "unclaimed",
+                roomNumber: "GYM-001",
+                phone: "(555) 456-7890",
+                image: "bottle"
+            },
+            {
+                id: 4,
+                name: "Silver Laptop Charger",
+                description: "Dell 65W USB-C charger with a 4-foot cable. Slight fraying near the connector.",
+                where: "Student Lounge - Near vending machines",
+                when: "2023-10-13 12:30",
+                contact: "student_affairs@shsss.edu",
+                claimStatus: "unclaimed",
+                roomNumber: "SL-101",
+                phone: "(555) 234-5678",
+                image: "charger"
+            },
+            {
+                id: 5,
+                name: "Glasses in Black Case",
+                description: "Ray-Ban prescription glasses with black frame. In a black hard case.",
+                where: "Cafeteria - Table near windows",
+                when: "2023-10-16 18:20",
+                contact: "cafeteria_management@shsss.edu",
+                claimStatus: "claimed",
+                roomNumber: "CAF-200",
+                phone: "(555) 345-6789",
+                image: "glasses"
+            },
+            {
+                id: 6,
+                name: "Student ID Card",
+                description: "Student ID for Maria Gonzalez. ID#: 202312345. Expires 12/2024.",
+                where: "Science Building - Hallway B",
+                when: "2023-10-15 09:45",
+                contact: "security_office@shsss.edu",
+                claimStatus: "unclaimed",
+                roomNumber: "SEC-001",
+                phone: "(555) 876-5432",
+                image: "idcard"
+            }
+        ];
+
+        // DOM elements
+        const itemsContainer = document.getElementById('items-container');
+        const searchInput = document.getElementById('search-input');
+        const searchButton = document.getElementById('search-button');
+        const statusSelect = document.getElementById('status-select');
+        const noResults = document.getElementById('no-results');
+        const reportBtn = document.getElementById('report-btn');
+
+        // Display items function
+        function displayItems(itemsToDisplay) {
+            itemsContainer.innerHTML = '';
+            
+            if (itemsToDisplay.length === 0) {
+                noResults.style.display = 'block';
+                return;
+            }
+            
+            noResults.style.display = 'none';
+            
+            itemsToDisplay.forEach(item => {
+                const itemCard = document.createElement('div');
+                itemCard.className = 'item-card';
+                
+                // Determine icon based on item type
+                let itemIcon = 'fa-question';
+                if (item.image === 'earbuds') itemIcon = 'fa-earbuds';
+                else if (item.image === 'textbook') itemIcon = 'fa-book';
+                else if (item.image === 'bottle') itemIcon = 'fa-bottle-water';
+                else if (item.image === 'charger') itemIcon = 'fa-bolt';
+                else if (item.image === 'glasses') itemIcon = 'fa-glasses';
+                else if (item.image === 'idcard') itemIcon = 'fa-id-card';
+                
+                itemCard.innerHTML = `
+                    <div class="item-image">
+                        <i class="fas ${itemIcon}"></i>
+                        <span class="item-status ${item.claimStatus === 'claimed' ? 'status-claimed' : 'status-unclaimed'}">
+                            ${item.claimStatus === 'claimed' ? 'Claimed' : 'Unclaimed'}
+                        </span>
+                    </div>
+                    <div class="item-details">
+                        <h3>${item.name}</h3>
+                        <p class="item-description">${item.description}</p>
+                        
+                        <div class="item-info">
+                            <p><i class="fas fa-map-marker-alt"></i> <strong>Where:</strong> ${item.where}</p>
+                            <p><i class="fas fa-calendar-alt"></i> <strong>When:</strong> ${formatDate(item.when)}</p>
+                            <p><i class="fas fa-door-open"></i> <strong>Room:</strong> ${item.roomNumber}</p>
+                            <p><i class="fas fa-phone"></i> <strong>Contact:</strong> ${item.phone}</p>
+                        </div>
+                        
+                        <button class="contact-btn" ${item.claimStatus === 'claimed' ? 'disabled' : ''}>
+                            ${item.claimStatus === 'claimed' ? 'Already Claimed' : 'Contact to Claim'}
+                        </button>
+                    </div>
+                `;
+                itemsContainer.appendChild(itemCard);
+            });
+        }
+
+        // Format date for display
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+            return new Date(dateString).toLocaleDateString('en-US', options);
+        }
+
+        // Filter items based on search and status
+        function filterItems() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const status = statusSelect.value;
+            
+            const filteredItems = lostItems.filter(item => {
+                const matchesSearch = item.name.toLowerCase().includes(searchTerm) || 
+                                    item.description.toLowerCase().includes(searchTerm) ||
+                                    item.where.toLowerCase().includes(searchTerm);
+                const matchesStatus = status === 'all' || item.claimStatus === status;
+                
+                return matchesSearch && matchesStatus;
+            });
+            
+            displayItems(filteredItems);
+        }
+
+        // Report lost item functionality
+        reportBtn.addEventListener('click', () => {
+            alert('In a real implementation, this would open a form to report a lost item.\n\nThe form would collect:\n- Item name\n- Description\n- Where it was lost\n- When it was lost\n- Contact information\n- Room number\n- Phone number');
+        });
+
+        // Contact button functionality
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('contact-btn') && !e.target.disabled) {
+                const itemName = e.target.closest('.item-card').querySelector('h3').textContent;
+                alert(`In a real implementation, this would initiate contact about: ${itemName}\n\nThis might open an email client or display contact information.`);
+            }
+        });
+
+        // Event listeners
+        searchInput.addEventListener('input', filterItems);
+        searchButton.addEventListener('click', filterItems);
+        statusSelect.addEventListener('change', filterItems);
+
+        // Initialize the page with all items
+        displayItems(lostItems);
+        
+        // Simulate loading from JSON file
+        console.log("This page would typically load data from a data.json file");
+        console.log("Sample data is being used for demonstration purposes");
+    </script>
+</body>
+</html>
